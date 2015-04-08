@@ -24,38 +24,31 @@ struct student* allocate(){
 }
 
 void generate(struct student* students){
-     /*Generate random ID and scores for ten students, ID being between 1 and 10, scores between 0 and 100*/
-    int id = 0; 
-    int ids[10];
+     /*Generate random ID and scores for ten students, ID being between 1 and
+      * 10, scores between 0 and 100*/
 
-    int score = -1;  // initialize at -1 since 0 is valid score
-    int scores[10];
-
-    int unique_id = 1;  // flag to indicate unique id found (0 = false, 1 = true)
-
-    int i, j;        // loop control variables
+    int i, j;           // loop control variables
+    int unique_id = 0;  // flag to indicate unique id found (0 = false, 1 = true)
 
     /* Seed RNG */
     srand(time(NULL));
 
-    /* initialize ids and scores */
-    for (i = 0; i < 10; i++) 
+    /* Initialize ID/score of first student (since ID guaranteed to be unique) */
+    students[0].id = rand() % 10 + 1;
+    students[0].score = rand() % 100 + 1;
+    
+    /* Loop through each student and generate a score and id for each */
+    for (i = 1; i < 10; i++) 
     {
-        ids[i] = id;
-        scores[i] = score;
-    }
-
-    /* initialize ids[0] to a nonzero number */
-    for (i = 0; i < 10; i++) 
-    {
-        id = 0;
-        while (unique_id == 0 || id == 0) 
+        /* continue generating IDs until a unique one is found */
+        while (unique_id == 0) 
         {
-            id = rand() % 10 + 1;
+            students[i].id = rand() % 10 + 1;
 
+            /* check that ID does not equal previously generated IDs */
             for (j = 0; j < i; j++) 
             {
-                if (id == ids[j]) 
+                if (students[i].id == students[j].id) 
                 {
                     unique_id = 0;
                     break;
@@ -68,10 +61,7 @@ void generate(struct student* students){
         }
 
         unique_id = 0;
-        ids[i] = id;
-        score = rand() % 100;
-        students[i].id = id; 
-        students[i].score = score;
+        students[i].score = rand() % 100 + 1;
     }
 }
 
