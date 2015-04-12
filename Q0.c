@@ -1,7 +1,8 @@
 /* CS261- Assignment 1 - Q. 0*/
 /* Name: Tim Thomas
  * Date: 4/4/2015
- * Solution description:
+ * Solution description:  practice using the address operator and passing 
+ *                        a pointer to a function.
  */
  
 #include <stdio.h>
@@ -9,7 +10,7 @@
 
 void fooA(int* iptr){
      /*Print the value pointed to by iptr*/
-     printf("The value of the integer (x) pointed to by iptr = %i\n", *iptr);
+     printf("The value of the integer pointed to by iptr = %d\n", *iptr);
      
      /*Print the address pointed to by iptr*/
      printf("The address pointed to by iptr = %p\n", iptr);     
@@ -30,7 +31,7 @@ int main(){
     fooA(&x);
     
     /*print the value of x*/
-    printf("The value of x = %i\n", x);
+    printf("The value of x = %d\n", x);
     
     return 0;
 }

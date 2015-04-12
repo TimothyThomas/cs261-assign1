@@ -1,7 +1,9 @@
 /* CS261- Assignment 1 - Q.1*/
 /* Name: Tim Thomas
  * Date: 4/4/2015
- * Solution description:
+ * Solution description:  Allocating memory for a struct.  Using rand() to
+ * generate random values within specified limits.  Accessing and printing
+ * values within a struct.  Freeing memory.
  */
  
 #include <stdio.h>
@@ -14,6 +16,13 @@ struct student{
 	int score;
 };
 
+/******************************************************************************
+ ** Function:         allocate() 
+ ** Description:      Allocates memory for an array of struct student 
+ ** Parameters:       None. 
+ ** Pre-Conditions:   None.
+ ** Post-Conditions:  Returns pointer to array. 
+ *****************************************************************************/
 struct student* allocate(){
      /*Allocate memory for ten students*/
     int num = 10;
@@ -23,6 +32,14 @@ struct student* allocate(){
     return ptr;
 }
 
+
+/******************************************************************************
+ ** Function:         generate() 
+ ** Description:      Generates scores and IDs for studnets. 
+ ** Parameters:       Pointer to students. 
+ ** Pre-Conditions:   students must be initialized. 
+ ** Post-Conditions:  students is populated with IDs and values for each student 
+ *****************************************************************************/
 void generate(struct student* students){
      /*Generate random ID and scores for ten students, ID being between 1 and
       * 10, scores between 0 and 100*/
@@ -33,11 +50,11 @@ void generate(struct student* students){
     /* Seed RNG */
     srand(time(NULL));
 
-    /* Initialize ID/score of first student (since ID guaranteed to be unique) */
+    /* Set ID/score of 1st student (since 1st ID guaranteed to be unique) */
     students[0].id = rand() % 10 + 1;
     students[0].score = rand() % 100 + 1;
     
-    /* Loop through each student and generate a score and id for each */
+    /* Loop through rest of students and generate a score and id for each */
     for (i = 1; i < 10; i++) 
     {
         /* continue generating IDs until a unique one is found */
@@ -65,6 +82,14 @@ void generate(struct student* students){
     }
 }
 
+
+/******************************************************************************
+ ** Function:         output 
+ ** Description:      Prints unsorted IDs and scores for all students. 
+ ** Parameters:       Pointer to students. 
+ ** Pre-Conditions:   generate function should have been called 
+ ** Post-Conditions:  prints output to screen 
+ *****************************************************************************/
 void output(struct student* students){
      /*Output information about the ten students in the format:
               ID1 Score1
@@ -75,20 +100,32 @@ void output(struct student* students){
 
     int i;   // loop control
 
+    // Loop through each student and output ID and Score (unsorted)
     for (i = 0; i < 10; i++)
     {
         printf("%d %d\n", students[i].id, students[i].score);
     }
 }
 
+
+/******************************************************************************
+ ** Function:         summary() 
+ ** Description:      Prints min, max and average score of ten students 
+ ** Parameters:       Pointer to student 
+ ** Pre-Conditions:   generate function should be run. 
+ ** Post-Conditions:  none. 
+ *****************************************************************************/
 void summary(struct student* students){
      /*Compute and print the minimum, maximum and average scores of the ten students*/
-    int i, min, max, sum;
+    int i;                 // loop control
+    int min, max, sum;     
     double avg;
+
     min = 100;
     max = 0;
     sum = 0;
 
+    // Loop through all values finding min, max and calculating sum
     for (i = 0; i < 10; i++) 
     {
         if (students[i].score > max)  
@@ -103,6 +140,8 @@ void summary(struct student* students){
 
         sum += students[i].score;
     }
+
+    // computer average
     avg = sum / 10.0; 
     
     printf("Minimum score is: %d\n", min);
@@ -110,8 +149,21 @@ void summary(struct student* students){
     printf("Average score is: %.2f\n", avg);
 }
 
+
+/******************************************************************************
+ ** Function:         deallocate() 
+ ** Description:      De-Allocates memory. 
+ ** Parameters:       Pointer to students. 
+ ** Pre-Conditions:   students must != NULL 
+ ** Post-Conditions:  memory freed. 
+ *****************************************************************************/
 void deallocate(struct student* stud){
      /*Deallocate memory from stud*/
+    if (stud != 0) 
+    {
+        free(stud); 
+    }
+    return;
 }
 
 int main(){
@@ -130,6 +182,7 @@ int main(){
     summary(stud);
     
     /*call deallocate*/
+    deallocate(stud);
 
     return 0;
 }

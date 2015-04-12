@@ -1,7 +1,7 @@
 /* CS261- Assignment 1 - Q.4*/
-/* Name:
- * Date:
- * Solution description:
+/* Name:  Tim Thomas
+ * Date:  4/11/2015
+ * Solution description:  Sorting a struct by accessing its data.
  */
  
 #include <stdio.h>
@@ -12,11 +12,21 @@ struct student{
 	int score;
 };
 
+
+/******************************************************************************
+ ** Function:         sort 
+ ** Description:      Sorts an array of student structs based on scores 
+ **                   Uses bubble sort.
+ ** Parameters:       Pointer to array and size of array. 
+ ** Pre-Conditions:   none. 
+ ** Post-Conditions:  none. 
+ *****************************************************************************/
 void sort(struct student* students, int n){
     /*Sort the n students based on their score*/     
-    int i, j;
-    struct student temp;
+    int i, j;              // loop control
+    struct student temp;   // temp struct for swapping
 
+    /* bubble sort */
     for (i = n - 1; i > 0; i--) 
     {
         for (j = 0; j < i; j++)
@@ -31,6 +41,8 @@ void sort(struct student* students, int n){
     }
 }
 
+
+/* Much of the code in main is from functions implemented in Q1.c */
 int main(){
     /*Declare an integer n and assign it a value.*/
     int n = 10;
@@ -77,7 +89,7 @@ int main(){
     }
 
     /*Print the contents of the array of n students.*/
-    printf("\nUnsorted: \n");
+    printf("\nUnsorted IDs and Scores: \n");
     for (i = 0; i < 10; i++)
     {
         printf("%d %d\n", students[i].id, students[i].score);
